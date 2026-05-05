@@ -13,6 +13,9 @@ WORKDIR /opt/app-root/src
 COPY pyproject.toml requirements.txt ./
 COPY llmsearchindex/ ./llmsearchindex/
 
+# Install CPU-only PyTorch first (avoids downloading ~2GB of CUDA deps)
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
+
 # Install the package and its dependencies
 RUN pip install --no-cache-dir . && \
     pip install --no-cache-dir streamlit httpx pyarrow fsspec
