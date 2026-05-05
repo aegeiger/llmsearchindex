@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: llmsearchindex-cli-search
+  namespace: llmsearchindex
+spec:
+  backoffLimit: 1
+  activeDeadlineSeconds: 600
+  template:
+    spec:
+      containers:
+      - name: llmsearchindex
+        image: quay.io/aicatalyst/llmsearchindex:latest
+        imagePullPolicy: Always
+        command: ["python"]
+        args: ["search.py", "who invented sliced bread", "--k", "3"]
+        env:
+        - name: HF_HOME
+          value: /tmp/hf_cache
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "2000m"
+          limits:
+            memory: "8Gi"
+            cpu: "4000m"
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+      restartPolicy: Never
