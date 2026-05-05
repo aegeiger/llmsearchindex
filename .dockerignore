@@ -1,0 +1,14 @@
+.git
+*.md
+LICENSE
+kubernetes/
+poc-plan.md
+tests/
+docs/
+__pycache__/
+.env*
+training_run.log
+benchmark.py
+train.py
+upload.py
+scripts/
